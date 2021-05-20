@@ -2,8 +2,9 @@ import re
 import nltk
 from nltk.corpus import stopwords
 import numpy as np
-from tsne import tsne
 import csv
+
+"""Section 1.A."""
 
 
 def word_extraction(sentence, stop_words):
@@ -57,7 +58,7 @@ def load_data_to_list_of_greetings():
 def generate_bow():
     """
     get the raw sentences, process them, create vocabulary
-    :return: bag of words for each sentence (include counts)
+    :return: bag of words for each sentence (include counts), list of original sentences
     """
     nltk.download('stopwords')
     stop_words = set(stopwords.words('english'))  # get nltk stopwords
@@ -66,7 +67,7 @@ def generate_bow():
 
     allsentences = load_data_to_list_of_greetings()
     vocab = tokenize(allsentences, stop_words)
-    print("Word List for Document \n{0} \n".format(vocab))
+    # print("Word List for Document \n{0} \n".format(vocab))
 
     bag_matrix = np.empty((0, len(vocab)), int)
     for sentence in allsentences:
@@ -78,6 +79,9 @@ def generate_bow():
                     bag_vector[i] += 1
         bag_matrix = np.vstack([bag_matrix, bag_vector])
     return bag_matrix, allsentences
+
+
+"""Section 1.B."""
 
 
 def create_matrix():
@@ -98,5 +102,5 @@ def create_matrix():
 
 
 if __name__ == '__main__':
-    # generate_bow()
+    bag_matrix, allsentences = generate_bow()
     create_matrix()

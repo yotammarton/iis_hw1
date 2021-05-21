@@ -2,7 +2,9 @@ import re
 import nltk
 from nltk.corpus import stopwords
 import numpy as np
-import csv
+from pandas import DataFrame
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 """Section 1.A."""
 
@@ -109,10 +111,16 @@ def return_similar_and_unsimilar_idea(mat, idea1):
 
 if __name__ == '__main__':
     """Section 1.A."""
-    bag_matrix, allsentences = generate_bow()
+    # bag_matrix, allsentences = generate_bow()
 
     """Section 1.B."""
     ideas_matrix = create_matrix()
-    for idea in range(1,11,1):
+    df = DataFrame(ideas_matrix, index=range(1,11,1), columns=range(1,11,1))
+    sns.heatmap(df, annot=False, cmap="YlGnBu")
+    plt.show()
+
+    for idea in range(1, 11, 1):
         similar_idea, unsimilar_idea = return_similar_and_unsimilar_idea(ideas_matrix, idea)
         print(f'for idea {idea}: {similar_idea} is similar idea, {unsimilar_idea} is unsimilar idea')
+
+

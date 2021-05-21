@@ -100,7 +100,16 @@ def create_matrix():
 
     return ideas_matrix
 
+def return_similar_and_unsimilar_idea(mat, idea1):
+    similar_idea = mat[idea1-1].argmax() + 1
+    tmp_row = np.array([val if idx!=(idea1-1) else np.inf for idx,val in enumerate(mat[idea1-1])])
+    unsimilar_idea = tmp_row.argmin() + 1
+    return similar_idea, unsimilar_idea
+
 
 if __name__ == '__main__':
-    bag_matrix, allsentences = generate_bow()
-    create_matrix()
+    # bag_matrix, allsentences = generate_bow()
+    ideas_matrix = create_matrix()
+    for idea in range(1,11,1):
+        similar_idea, unsimilar_idea = return_similar_and_unsimilar_idea(ideas_matrix, idea)
+        print(f'for {idea}: {similar_idea} is similar idea, {unsimilar_idea} is unsimilar idea')

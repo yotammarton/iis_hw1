@@ -87,6 +87,9 @@ def generate_bow():
 
 
 def create_matrix():
+    """
+    :return: #ideas x # ideas matrix with counts of appearances in the same cluster
+    """
     ideas_matrix = np.zeros((10, 10))
 
     with open('matrix_assignment.csv', 'r') as file:
@@ -103,6 +106,11 @@ def create_matrix():
 
 
 def return_similar_and_unsimilar_idea(mat, idea1):
+    """
+    :param mat: appearances counts matrix
+    :param idea1: given idea
+    :return: similar and unsimilar ideas with respect to idea1
+    """
     unsimilar_idea = mat[idea1 - 1].argmin() + 1
     tmp_row = np.array([val if idx != (idea1 - 1) else -np.inf for idx, val in enumerate(mat[idea1 - 1])])
     similar_idea = tmp_row.argmax() + 1

@@ -97,15 +97,15 @@ def create_matrix():
                 list = [int(i) for i in list.split(',') if i != '']
                 for i in list:
                     for j in list:
-                        if i != j:
-                            ideas_matrix[i - 1][j - 1] += 1
+                        ideas_matrix[i - 1][j - 1] += 1
 
     return ideas_matrix
 
+
 def return_similar_and_unsimilar_idea(mat, idea1):
-    similar_idea = mat[idea1-1].argmax() + 1
-    tmp_row = np.array([val if idx!=(idea1-1) else np.inf for idx,val in enumerate(mat[idea1-1])])
-    unsimilar_idea = tmp_row.argmin() + 1
+    unsimilar_idea = mat[idea1 - 1].argmin() + 1
+    tmp_row = np.array([val if idx != (idea1 - 1) else -np.inf for idx, val in enumerate(mat[idea1 - 1])])
+    similar_idea = tmp_row.argmax() + 1
     return similar_idea, unsimilar_idea
 
 
@@ -115,12 +115,10 @@ if __name__ == '__main__':
 
     """Section 1.B."""
     ideas_matrix = create_matrix()
-    df = DataFrame(ideas_matrix, index=range(1,11,1), columns=range(1,11,1))
-    sns.heatmap(df, annot=False, cmap="YlGnBu")
+    df = DataFrame(ideas_matrix, index=range(1, 11, 1), columns=range(1, 11, 1))
+    sns.heatmap(df, annot=False, cmap="YlGnBu", vmin=0, vmax=5000)
     plt.show()
 
     for idea in range(1, 11, 1):
         similar_idea, unsimilar_idea = return_similar_and_unsimilar_idea(ideas_matrix, idea)
         print(f'for idea {idea}: {similar_idea} is similar idea, {unsimilar_idea} is unsimilar idea')
-
-
